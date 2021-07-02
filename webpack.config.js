@@ -1,6 +1,6 @@
 // IMPORTS
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 // VAR
 const mode = process.env.NODE_ENV;
@@ -14,46 +14,50 @@ const common = {
     entry: {
         background: './src/background.ts',
         content: './src/content.ts',
-        popup: './src/popup.ts'
+        popup: './src/popup.ts',
     },
     module: {
         rules: [
             {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
-                exclude: /node_modules/
-            }
-        ]
+                exclude: /node_modules/,
+            },
+        ],
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js']
+        extensions: ['.tsx', '.ts', '.js'],
     },
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
     },
-    plugins: [new CopyWebpackPlugin([{ from: 'public' }])]
+    plugins: [
+        new CopyPlugin({
+            patterns: [{ from: 'public', to: 'dist' }],
+        }),
+    ],
 };
 
 const development = {
     ...common,
     ...{
         mode,
-        devtool: 'inline-source-map'
-    }
+        devtool: 'inline-source-map',
+    },
 };
 
 const production = {
     ...common,
     ...{
-        mode
-    }
+        mode,
+    },
 };
 
 // CONF
 const config = {
     development,
-    production
+    production,
 };
 
 module.exports = config[mode];
