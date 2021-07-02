@@ -1,9 +1,9 @@
 {
-    "name": "Typescript Chrome Extension",
+    "name": "CVAT-Annotate",
     "version": "1.0",
-    "description": "Build your extensions with Typescript",
-    "manifest_version": 2,
-    "permissions": ["storage"],
+    "description": "Annotate websites based on the page content",
+    "manifest_version": 3,
+    "permissions": [],
     "background": {
         "scripts": ["background.js"],
         "persistent": false
